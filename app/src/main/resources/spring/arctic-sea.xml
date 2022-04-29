@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ctx="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="org.n52.iceland.config.spring.LifecycleBeanPostProcessor">
+        <description>This calls Constructable#init and Destroyable#destroy for all beans.</description>
+    </bean>
+
+    <bean id="schemaRepository" class="org.n52.svalbard.encode.SchemaRepository"/>
+
+    <bean id="encoderRepository" class="org.n52.svalbard.encode.EncoderRepository"/>
+    <bean id="decoderRepository" class="org.n52.svalbard.decode.DecoderRepository"/>
+
+    <bean id="xmlOptionsHelper" class="org.n52.svalbard.util.XmlOptionsHelper" />
+    <bean id="sweHelper" class="org.n52.svalbard.util.SweHelper" />
+
+       <import resource="classpath*:svalbard-xmlbeans-context.xml"/>
+</beans>

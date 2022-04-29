@@ -1,0 +1,13 @@
+spring:
+    main:
+      web-application-type: none
+      allow-circular-references: true
+      
+sos:
+  host: localhost
+  port: 8080
+  path: /52n-sos-webapp/service
+    
+logging:
+  level:
+    root: INFO
