@@ -15,3 +15,7 @@ Run the ```org.n52.demo.DemoApplication``` in the ```/app``` module
 [arctic-sea.xml](https://github.com/52North/demo-spring-arctic-sea/blob/main/app/src/main/resources/spring/arctic-sea.xml):
 
  * Defines some beans, e.g. the decoder and encoder repositories
+
+[application.yml](https://github.com/52North/demo-spring-arctic-sea/blob/main/app/src/main/resources/application.yml):
+
+  * define the host, port and path of the SOS
