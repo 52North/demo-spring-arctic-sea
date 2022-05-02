@@ -45,6 +45,7 @@ import org.n52.shetland.ogc.sos.Sos1Constants;
 import org.n52.shetland.ogc.sos.Sos2Constants;
 import org.n52.shetland.ogc.sos.SosCapabilities;
 import org.n52.shetland.ogc.sos.SosObservationOffering;
+import org.n52.shetland.ogc.sos.request.DescribeSensorRequest;
 import org.n52.svalbard.decode.exception.DecodingException;
 import org.n52.svalbard.encode.exception.EncodingException;
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class Processor {
 				SosObservationOffering offering = capabilities.getContents().get().first();
 				for (String procdure : offering.getProcedures()) {
 					requestDescribeSensorKvp100(procdure, SensorMLConstants.SENSORML_OUTPUT_FORMAT_MIME_TYPE);
+					requestDescribeSensorPox100(procdure, SensorMLConstants.SENSORML_OUTPUT_FORMAT_MIME_TYPE);
 				}
 			}
 		}
@@ -86,6 +88,7 @@ public class Processor {
 				SosObservationOffering offering = capabilities.getContents().get().first();
 				for (String procdure : offering.getProcedures()) {
 					requestDescribeSensorKvp200(procdure, SensorML20Constants.NS_SML_20);
+					requestDescribeSensorPox200(procdure, SensorML20Constants.NS_SML_20);
 				}
 			}
 		}
@@ -101,6 +104,13 @@ public class Processor {
 				format));
 	}
 
+	private void requestDescribeSensorPox100(String procdure, String outputFormat) {
+		DescribeSensorRequest request = new DescribeSensorRequest(Sos1Constants.SOS, Sos1Constants.SERVICEVERSION);
+		request.setProcedure(procdure);
+		request.setProcedureDescriptionFormat(outputFormat);
+		process(new DescribeSensorPoxProcessor(demoConfig, httpClientHandler, request));
+	}
+
 	private OwsServiceResponse requestGetCapabilitiesKVP20() {
 		return (OwsServiceResponse) process(
 				new GetCapabilitiesKvpProcessor(demoConfig, httpClientHandler, Sos2Constants.SERVICEVERSION));
@@ -109,6 +119,13 @@ public class Processor {
 	private void requestDescribeSensorKvp200(String procdure, String format) {
 		process(new DescribeSensorKvpProcessor(demoConfig, httpClientHandler, procdure, Sos2Constants.SERVICEVERSION,
 				format));
+	}
+	
+	private void requestDescribeSensorPox200(String procdure, String procedureDescriptionFormat) {
+		DescribeSensorRequest request = new DescribeSensorRequest(Sos2Constants.SOS, Sos2Constants.SERVICEVERSION);
+		request.setProcedure(procdure);
+		request.setProcedureDescriptionFormat(procedureDescriptionFormat);
+		process(new DescribeSensorPoxProcessor(demoConfig, httpClientHandler, request));
 	}
 
 	private Object process(AbstractRequestProcessor processor) {
